@@ -1,7 +1,7 @@
 Team members
 
-    Member 1 (responsible for ...)
-    Member 2 (responsible for ...)
+    soudruh předseda Pochyčenkovič (responsible for ...)
+    soudruh Matějkin (responsible for ...)
     Member 3 (responsible for ...)
     Member 4 (responsible for ...)
 
