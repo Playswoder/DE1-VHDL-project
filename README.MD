@@ -1,4 +1,4 @@
-**Team members**
+# Team members
 
     soudruh předseda Pochyčenkovič (řídí ministerstvo rozvoje a kultury VHDL kódu)
     soudruh Matějkin (běžný občan [bude dělat všechnu práci], momentálně je poslední v pořadníku s 5 letou čekací doubou na byt a předposlední v pořadníku se 7 letou čekací dobou na auto)
