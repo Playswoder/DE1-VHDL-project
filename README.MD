@@ -9,8 +9,6 @@
 
 An abstract is a short summary of your project, usually about a paragraph (6-7 sentences, 150-250 words) long. A well-written abstract serves multiple purposes: (a) an abstract lets readers get the gist or essence of your project quickly; (b) an abstract prepares readers to follow the detailed information, description, and results in your report; (c) and, later, an abstract helps readers remember key points from your project.
 
-This project involves the development of a PWM-based tone generator using the Nexys A7 FPGA board. By leveraging the board's audio jack connector, the generator produces musical tones or melodies with adjustable parameters such as frequency and duration, controlled via buttons or switches. LEDs provide a visual representation of the currently generated tones, enhancing the user interaction experience. The implementation showcases the application of FPGA programming in audio signal generation, offering a foundation for educational and experimental purposes in digital signal processing.
-
 **The main contributions of the project are:**
 
     ...
