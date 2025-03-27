@@ -1,9 +1,9 @@
 # Team members
 
     soudruh předseda Pochyčenkovič (řídí ministerstvo rozvoje a kultury VHDL kódu)
-    soudruh Matějkin (běžný občan [bude dělat všechnu práci], momentálně je poslední v pořadníku s 5 letou čekací doubou na byt a předposlední v pořadníku se 7 letou čekací dobou na auto)
-    Member 3 (responsible for ...)
-    Member 4 (responsible for ...)
+    soudruh Matějkin (prostý občan [bude dělat všechnu práci], momentálně je poslední v pořadníku s 5 letou čekací doubou na byt a předposlední v pořadníku se 7 letou čekací dobou na auto)
+    soudružka Annovična (poctivá udavačka chyb a závad VHDL kódu, není soudruha na nějž by nic nenašla)
+    soudruh Kubínovič (příslušník Veřejné bezpečnosti VHDL kódu, dohlíží na korektnost a správnost jak chování soudruhů tak VHDL kódu)
 
 # Abstract
 
