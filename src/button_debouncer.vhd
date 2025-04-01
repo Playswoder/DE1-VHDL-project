@@ -1,0 +1,1 @@
+(Standard debounce logic using shift register and comparator/counter - readily available online, crucial for reliable button presses). Input: raw button, clk, reset. Output: clean pulse or level.
