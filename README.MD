@@ -33,7 +33,7 @@ Component(s) simulations
 Write descriptive text and put simulation screenshots of your components.
 References
 
-    Put here all references to sources and tools you used.
+**Put here all references to sources and tools you used.**
    * [EDA Playground](https://www.edaplayground.com/)
    * [TerosHDL](https://github.com/tomas-fryza/vhdl-course/wiki/How-to-install-TerosHDL-on-Windows-and-Linux)
    * [ghdl + GtkWave](https://github.com/tomas-fryza/vhdl-course/wiki/How-to-install-ghdl-on-Windows-and-Linux)
