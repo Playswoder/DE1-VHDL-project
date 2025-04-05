@@ -15,6 +15,8 @@ An abstract is a short summary of your project, usually about a paragraph (6-7 s
     Matějkin      (je zodpovědný za - )
     Annovična     (je zodpovědný za - )
     Kubínovič     (je zodpovědný za - )
+    
+![Schema](images/schema.jpg)
                     
 [Photo of your application with labels of individual parts.]
 
