@@ -4,9 +4,10 @@ use ieee.numeric_std.all;
 
 entity hodiny is
     Port ( clk100MHz : in  std_logic;
-           A         : in  std_logic;
+           A         : in  std_logic; -- co to dělá ten čudlík
            B         : in  std_logic;
-           C         : in  std_logic;
+           C         : in  std_logic; -- confirm třeba
+           mode      : in std_logic_vector(1 downto 0);
            HH        : out std_logic_vector(4 downto 0); 
            MM        : out std_logic_vector(5 downto 0); 
            SS        : out std_logic_vector(5 downto 0)  
@@ -18,11 +19,14 @@ architecture Behavioral of hodiny is
     signal s_hodiny  : integer range 0 to 23 := 0;
 
     signal count : integer range 0 to 99999999; 
-    signal mode  : integer range 0 to 1 := 0;   
+    signal mode_enable  : std_logic := '0';   
 
 begin
     process (clk100MHz)
     begin
+
+        mode_enable <= '1' when mode = "00" else '0'; -- jen když mode je ve stavu "00" bude reagovat na čudlíky
+
         if rising_edge(clk100MHz) then
             if mode = 0 then 
                 count <= count + 1;
@@ -45,14 +49,16 @@ begin
                     end if;
                 end if;
             else 
-                if rising_edge(A) then
+
+                if rising_edge(A) then -- změnit
                     if s_hodiny = 23 then
                         s_hodiny <= 0;
                     else
                         s_hodiny <= s_hodiny + 1;
                     end if;
                 end if;
-                if rising_edge(B) then
+
+                if rising_edge(B) then -- zmnit rising edge
                     if s_hodiny = 0 then
                         s_hodiny <= 23;
                     else
@@ -62,9 +68,10 @@ begin
             end if;
 
             
-            if rising_edge(C) then
+            if rising_edge(C) then -- mode je input
                 mode <= 1 - mode; 
             end if;
+
         end if;
     end process;
 
