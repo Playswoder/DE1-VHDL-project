@@ -5,7 +5,7 @@
     soudružka Annovična (poctivá udavačka chyb a závad VHDL kódu, není soudruha na nějž by nic nenašla)
     soudruh Kubínovič (příslušník Veřejné bezpečnosti VHDL kódu, dohlíží na korektnost a správnost jak chování soudruhů tak VHDL kódu)
 
-# Abstract
+# Digital Clock
 
 This project details the design and implementation of a versatile digital clock using VHDL (VHSIC Hardware Description Language). The system incorporates three key functionalities: a real-time clock displaying hours, minutes, and seconds; an alarm feature allowing users to set a specific time for an alert; and a stopwatch capable of measuring elapsed time. The design utilizes a modular approach, breaking down the system into distinct VHDL entities for timekeeping, alarm control, and stopwatch operation. These modules are then interconnected to create a comprehensive digital time management system. Simulation and synthesis results will be presented to validate the functionality and performance of the designed clock. This project demonstrates the application of VHDL in creating practical digital systems with real-world applications.
 
