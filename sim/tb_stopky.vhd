@@ -12,22 +12,22 @@ architecture sim of tb_stopwatch_logic is
         port (
             clk       : in  std_logic;
             reset     : in  std_logic;
-            mode      : in  std_logic_vector(2 downto 0);
+            mode      : in  std_logic_vector(1 downto 0);
             start_stop: in  std_logic;
-            svv       : out std_logic_vector(7 downto 0);
-            sss       : out std_logic_vector(7 downto 0);
-            smm       : out std_logic_vector(7 downto 0)
+            svv       : out std_logic_vector(6 downto 0);
+            sss       : out std_logic_vector(5 downto 0);
+            smm       : out std_logic_vector(5 downto 0)
         );
     end component;
 
     -- Testbench signals
     signal clk       : std_logic := '0';
     signal reset     : std_logic := '0';
-    signal mode      : std_logic_vector(2 downto 0) := "000";
+    signal mode      : std_logic_vector(1 downto 0) := "00";
     signal start_stop: std_logic := '0';
-    signal svv       : std_logic_vector(7 downto 0);
-    signal sss       : std_logic_vector(7 downto 0);
-    signal smm       : std_logic_vector(7 downto 0);
+    signal svv       : std_logic_vector(6 downto 0);
+    signal sss       : std_logic_vector(5 downto 0);
+    signal smm       : std_logic_vector(5 downto 0);
 
     -- Clock period constant (10 ns)
     constant clk_period : time := 10 ns;
@@ -64,24 +64,20 @@ begin
         reset <= '0';
         
         -- Set mode to enable counting
-        mode <= "010";
+        mode <= "10";
+
+	wait for 1 ms;
 
         -- Toggle start/stop signal to start the stopwatch
         start_stop <= '1';
         wait for clk_period * 2;
         start_stop <= '0';
 
-        -- Let the stopwatch run for a while
-        wait for 1 ms;
-
-        -- Toggle start/stop signal to stop the stopwatch
-        start_stop <= '1';
-        wait for clk_period * 2;
-        start_stop <= '0';
-
         -- Observe the output for a short time
-        wait for 500 ns;
-
+        wait for 21 ms;
+	reset <= '1';
+        wait for 20 ns;
+        reset <= '0';
         -- End simulation
         wait;
     end process stim_proc;
