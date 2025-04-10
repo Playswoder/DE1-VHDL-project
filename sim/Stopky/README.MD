@@ -10,4 +10,4 @@ Describe simulation results
 
 
 [IMG simulation result]
-![image](Stopky/img/tb_stopky.png)
+![image](img/tb_stopky.png)
