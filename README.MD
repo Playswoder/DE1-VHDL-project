@@ -27,6 +27,13 @@ Enter a description of the problem and how to solve it.
 Hardware description of demo application
 
 Insert descriptive text and schematic(s) of your implementation.
+
+![Stopwatch](sim/Stopky/README.MD)
+
+
+
+
+
 # Software description
 
 Put flowchats/state diagrams of your algorithm(s) and direct links to source/testbench files in src and sim folders. Put a descriptive top-level schematic of your application.
