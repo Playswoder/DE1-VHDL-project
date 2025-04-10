@@ -86,8 +86,6 @@ begin
 
 end tb;
 
--- Configuration block below is required by some simulators. Usually no need to edit.
-
 configuration cfg_tb_switch of tb_switch is
     for tb
     end for;
