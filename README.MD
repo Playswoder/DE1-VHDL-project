@@ -29,6 +29,7 @@ Hardware description of demo application
 Insert descriptive text and schematic(s) of your implementation.
 
 ![Stopwatch](sim/Stopky/README.MD)
+![Switch](sim/Switch/README.MD)
 
 
 
