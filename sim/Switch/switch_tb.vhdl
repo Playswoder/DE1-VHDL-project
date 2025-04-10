@@ -83,7 +83,6 @@ begin
 
         wait;
     end process;
-
 end tb;
 
 configuration cfg_tb_switch of tb_switch is
