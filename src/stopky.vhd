@@ -43,17 +43,19 @@ begin
     -- Start/Stop Control Logic
     control_proc : process(clk, reset)
     begin
-        if reset = '1' then
-            running <= '0';
-            start_stop_prev <= '0';
-        elsif rising_edge(clk) then
-            start_stop_prev <= start_stop; -- Edge detection
-            if enable_counting = '1' then
-                if start_stop = '1' and start_stop_prev = '0' then
-                    running <= not running; -- Toggle state
-                end if;
-            else
+        if rising_edge(clk) then
+            if reset = '1' and mode = "10" then
                 running <= '0';
+                start_stop_prev <= '0';
+            else
+                start_stop_prev <= start_stop; -- Edge detection
+                if enable_counting = '1' then
+                    if start_stop = '1' and start_stop_prev = '0' then
+                        running <= not running; -- Toggle state
+                    end if;
+                else
+                    running <= '0';
+                end if;
             end if;
         end if;
     end process control_proc;
@@ -61,20 +63,23 @@ begin
     -- Tick generation process
     tick_gen_proc : process(clk, reset)
     begin
-        if reset = '1' then
-            clk_counter <= 0;
-            centisecond_tick <= '0';
-        elsif rising_edge(clk) then
-            centisecond_tick <= '0';
-            if running = '1' then
-                if clk_counter = CENTISECOND_TC - 1 then
-                    clk_counter <= 0;
-                    centisecond_tick <= '1';
-                else
-                    clk_counter <= clk_counter + 1;
-                end if;
-            else
+        if rising_edge(clk) then
+            if reset = '1' and mode = "10" then
                 clk_counter <= 0;
+                centisecond_tick <= '0';
+            else
+                if running = '1' then
+                    if clk_counter = CENTISECOND_TC - 1 then
+                        clk_counter <= 0;
+                        centisecond_tick <= '1'; -- Generate tick
+                    else
+                        clk_counter <= clk_counter + 1;
+                        centisecond_tick <= '0'; -- Ensure tick remains low
+                    end if;
+                else
+                    clk_counter <= 0; -- Reset counter if not running
+                    centisecond_tick <= '0';
+                end if;
             end if;
         end if;
     end process tick_gen_proc;
@@ -82,26 +87,29 @@ begin
     -- Stopwatch counter logic
     counter_proc : process(clk, reset)
     begin
-        if reset = '1' then
-            cs_reg <= (others => '0');
-            s_reg  <= (others => '0');
-            m_reg  <= (others => '0');
-        elsif rising_edge(clk) then
-            if centisecond_tick = '1' and running = '1' then
-                if cs_reg = CS_LIMIT then
-                    cs_reg <= (others => '0');
-                    if s_reg = SEC_MIN_LIMIT then
-                        s_reg <= (others => '0');
-                        if m_reg = SEC_MIN_LIMIT then
-                            m_reg <= (others => '0');
+
+        if rising_edge(clk) then
+            if reset = '1' and mode = "10" then
+                cs_reg <= (others => '0'); -- Reset centisecond counter
+                s_reg  <= (others => '0'); -- Reset second counter
+                m_reg  <= (others => '0'); -- Reset minute counter
+            else
+                if centisecond_tick = '1' and running = '1' then
+                    if cs_reg = CS_LIMIT then
+                        cs_reg <= (others => '0');
+                        if s_reg = SEC_MIN_LIMIT then
+                            s_reg <= (others => '0');
+                            if m_reg = SEC_MIN_LIMIT then
+                                m_reg <= (others => '0'); -- Overflow minute counter
+                            else
+                                m_reg <= m_reg + 1; -- Increment minutes
+                            end if;
                         else
-                            m_reg <= m_reg + 1;
+                            s_reg <= s_reg + 1; -- Increment seconds
                         end if;
                     else
-                        s_reg <= s_reg + 1;
+                        cs_reg <= cs_reg + 1; -- Increment centiseconds
                     end if;
-                else
-                    cs_reg <= cs_reg + 1;
                 end if;
             end if;
         end if;
