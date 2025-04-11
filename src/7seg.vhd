@@ -23,7 +23,12 @@ end entity BinTo7seg;
     signal digit0 : integer range 0 to 9;
     signal digit1 : integer range 0 to 9;
     signal POS_reg : unsigned(2 downto 0) := (others => '0');
+    
     constant n7SegDisp : integer := 6;
+    constant MILISECOND_TC : natural := 100_000;
+
+    signal clk_counter : natural range 0 to MILISECOND_TC - 1 := 0;
+    signal milisecond_tick : std_logic := '0';
 
     begin
 
@@ -36,21 +41,36 @@ end entity BinTo7seg;
 
 
 -- tick generating process if necessary, skip otherwise 
+tick_gen : process (clk)
+                if rising_edge(clk)
+                    if clk_counter = MILISECOND_TC - 1 then
+                        clk_counter <= 0;
+                        milisecond_tick <= '1'; -- Generate tick
+                    else
+                        clk_counter <= clk_counter + 1;
+                        milisecond_tick <= '0'; -- Ensure tick remains low
+                    end if;
+                end if;
+end process tick_gen;
 
 
 
-process (Position_counter)
+
+
+Position_counter : process (clk)
 begin
     if rising_edge(clk) then -- could be done at slower rate tho (not necessary hopefully, manual suggest 1ms per each)
-        if POS_reg = 6 then
-            POS_reg <= (others => '0');
-        else
-            POS_reg <= POS_reg + 1; 
+        if milisecond_tick = '1' then
+            if POS_reg = 6 then
+                POS_reg <= (others => '0');
+            else
+                POS_reg <= POS_reg + 1; 
+            end if;
         end if;
     end if;
-end process;
+end process Position_counter;
 
-process (Pos_converter)
+Pos_converter : process (clk)
 begin
 if rising_edge(clk)
 case POS_reg is
@@ -61,7 +81,7 @@ case POS_reg is
     when others => POS_OUT <= '111111'; -- all off
 end case;
 end if;
-end process;
+end process Pos_converter;
 
 process (BCD)
 begin
