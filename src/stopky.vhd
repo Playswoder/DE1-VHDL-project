@@ -8,9 +8,9 @@ entity stopwatch_logic is
         reset      : in  std_logic; -- Global reset
         mode       : in  std_logic_vector(1 downto 0); -- Mode: "10" for counting
         start_stop : in  std_logic; -- Toggle signal for start/stop
-        svv        : out std_logic_vector(6 downto 0); -- Centiseconds (00-99)
-        sss        : out std_logic_vector(5 downto 0); -- Seconds (00-59)
-        smm        : out std_logic_vector(5 downto 0)  -- Minutes (00-59)
+        svv        : out std_logic_vector(7 downto 0); -- Centiseconds (00-99)
+        sss        : out std_logic_vector(7 downto 0); -- Seconds (00-59)
+        smm        : out std_logic_vector(7 downto 0)  -- Minutes (00-59)
     );
 end entity stopwatch_logic;
 
@@ -22,9 +22,9 @@ architecture behavioral of stopwatch_logic is -- Fixed name match
     constant SEC_MIN_LIMIT  : natural := 59;
 
     -- Internal counter signals
-    signal cs_reg : unsigned(6 downto 0) := (others => '0');
-    signal s_reg  : unsigned(5 downto 0) := (others => '0');
-    signal m_reg  : unsigned(5 downto 0) := (others => '0');
+    signal cs_reg : unsigned(7 downto 0) := (others => '0');
+    signal s_reg  : unsigned(7 downto 0) := (others => '0');
+    signal m_reg  : unsigned(7 downto 0) := (others => '0');
 
     -- Control signals
     signal running         : std_logic := '0';
