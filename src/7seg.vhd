@@ -58,7 +58,7 @@ case POS_reg is
     when 5 => POS_OUT <= '101111';
     -- and so on --
     
-    when others => POS_OUT <= '111111';
+    when others => POS_OUT <= '111111'; -- all off
 end case;
 end if;
 end process;
