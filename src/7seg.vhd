@@ -39,16 +39,17 @@ end entity BinTo7seg;
 -- tick generating process if necessary, skip otherwise 
 tick_gen : process (clk)
 begin
-                if rising_edge(clk) then
-                    if clk_counter = MILISECOND_TC - 1 then
-                        clk_counter <= 0;
-                        milisecond_tick <= '1'; -- Generate tick
-                    else
-                        clk_counter <= clk_counter + 1;
-                        milisecond_tick <= '0'; -- Ensure tick remains low
-                    end if;
-                end if;
+    if rising_edge(clk) then
+        if clk_counter = MILISECOND_TC - 1 then
+            clk_counter <= 0;
+            milisecond_tick <= '1'; -- Generate tick
+        else
+            clk_counter <= clk_counter + 1;
+            milisecond_tick <= '0'; -- Ensure tick remains low
+        end if;
+    end if;
 end process tick_gen;
+
 
 
 
