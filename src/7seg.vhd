@@ -67,7 +67,7 @@ begin
     end if;
 end process Position_counter;
 
-digit_sep : process (clk, HH, MM, SS)
+digit_sep : process (clk)
 begin
 if rising_edge(clk) then
     case TO_INTEGER(POS_reg) is
@@ -91,7 +91,9 @@ if rising_edge(clk) then
 case TO_INTEGER(POS_reg) is
     when 5 => POS_OUT <= "011111"; -- display lights on '0'
     when 4 => POS_OUT <= "101111";
-    -- and so on --
+    when 3 => POS_OUT <= "110111";
+    when 2 => POS_OUT <= "111011";
+    when 1 => POS_OUT <= "111101";
     when 0 => POS_OUT <= "111110";
     when others => POS_OUT <= "111111"; -- all off
 end case;
@@ -104,7 +106,7 @@ BinToSeg : process (clk)
 begin
 -- code that lights individual segments (labs)
 -- make it synchronous
-
+if rising_edge(clk) then
     case digit0 is -- change the conditions to unsigned
       when 0 =>     -- x"0" means "0000" in hexadecimal
         seg <= "0000001";
@@ -137,7 +139,7 @@ begin
       when others =>
         seg <= "0111000";
     end case;
-
+end if;
 end process;
 
 end architecture behavioral;
