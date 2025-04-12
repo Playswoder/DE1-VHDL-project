@@ -11,8 +11,8 @@ port (
     SS : in std_logic_vector(7 downto 0);
     --SVV : in std_logic_vector(7 downto 0); -- just port it to the SS terminal
     --MODE : in std_logic_vector(1 downto 0); -- will ignore
-    SEG_OUT : out std_logic_vector(7 downto 0); -- used to forward singular numbers out
-    POS_OUT : out std_logic_vector(5 downto 0); -- position of each 7seg disp (should cycle between them)
+    seg : out std_logic_vector(6 downto 0); -- used to forward singular numbers out
+    POS_OUT : out std_logic_vector(5 downto 0) -- position of each 7seg disp (should cycle between them)
     -- common anode, so diplay turned on should have value '0' at its anode
 );
 end entity BinTo7seg;
@@ -39,7 +39,7 @@ end entity BinTo7seg;
 -- tick generating process if necessary, skip otherwise 
 tick_gen : process (clk)
 begin
-                if rising_edge(clk)
+                if rising_edge(clk) then
                     if clk_counter = MILISECOND_TC - 1 then
                         clk_counter <= 0;
                         milisecond_tick <= '1'; -- Generate tick
@@ -69,16 +69,16 @@ end process Position_counter;
 
 digit_sep : process (clk, HH, MM, SS)
 begin
-if rising_edge(clk)
-    case POS_reg
-    when 5 => digit0 <= unsigned(HH) / 10;  -- Get the tens digit
-    when 4 => digit0 <= unsigned(HH) mod 10; -- Get the units digit
-    when 3 => digit0 <= unsigned(MM) / 10;
-    when 2 => digit0 <= unsigned(MM) mod 10;
-    when 1 => digit0 <= unsigned(SS) / 10;
-    when 0 => digit0 <= unsigned(SS) mod 10; 
-    when others => digit0 <= 0;
-end case;
+if rising_edge(clk) then
+    case TO_INTEGER(POS_reg) is
+        when 5 => digit0 <= to_integer(unsigned(HH)) / 10;  -- Convert to integer before dividing
+        when 4 => digit0 <= to_integer(unsigned(HH)) mod 10; -- Convert to integer before modulus
+        when 3 => digit0 <= to_integer(unsigned(MM)) / 10;
+        when 2 => digit0 <= to_integer(unsigned(MM)) mod 10;
+        when 1 => digit0 <= to_integer(unsigned(SS)) / 10;
+        when 0 => digit0 <= to_integer(unsigned(SS)) mod 10; 
+        when others => digit0 <= 0;
+    end case;
 end if;
 end process digit_sep;
 
@@ -87,13 +87,13 @@ end process digit_sep;
 
 Pos_converter : process (clk)
 begin
-if rising_edge(clk)
-case POS_reg is
-    when 5 => POS_OUT <= '011111'; -- display lights on '0'
-    when 4 => POS_OUT <= '101111';
+if rising_edge(clk) then
+case TO_INTEGER(POS_reg) is
+    when 5 => POS_OUT <= "011111"; -- display lights on '0'
+    when 4 => POS_OUT <= "101111";
     -- and so on --
-    when 0 => POS_OUT <= '111110';
-    when others => POS_OUT <= '111111'; -- all off
+    when 0 => POS_OUT <= "111110";
+    when others => POS_OUT <= "111111"; -- all off
 end case;
 end if;
 end process Pos_converter;
@@ -106,51 +106,34 @@ begin
 -- make it synchronous
 
     case digit0 is -- change the conditions to unsigned
-      when x"0" =>     -- x"0" means "0000" in hexadecimal
+      when 0 =>     -- x"0" means "0000" in hexadecimal
         seg <= "0000001";
-      when x"1" =>
+      when 1 =>
         seg <= "1001111";
 
-      when x"2" =>     -- Display 2
+      when 2 =>     -- Display 2
         seg <= "0010010";  -- segments a, b, d, e, g on
 
-      when x"3" =>     -- Display 3
+      when 3 =>     -- Display 3
         seg <= "0000110";  -- segments a, b, c, d, g on
 
-      when x"4" =>     -- Display 4
+      when 4 =>     -- Display 4
         seg <= "1001100";  -- segments b, c, f, g on
 
-      when x"5" =>     -- Display 5
+      when 5 =>     -- Display 5
         seg <= "0100100";  -- segments a, c, d, f, g on
 
-      when x"6" =>     -- Display 6
+      when 6 =>     -- Display 6
         seg <= "0100000";  -- segments a, c, d, e, f, g on
 
-      when x"7" =>
+      when 7 =>
         seg <= "0001111";
-      when x"8" =>
+      when 8 =>
         seg <= "0000000";
 
-      when x"9" =>     -- Display 9
+      when 9 =>     -- Display 9
         seg <= "0000100";  -- segments a, b, c, d, f, g on
-
-
-    -- might not need the rest
-
-      when x"A" =>     -- Display A
-        seg <= "0001000";  -- segments a, b, c, e, f, g on
-
-      when x"b" =>     -- Display b
-        seg <= "1100000";  -- segments c, d, e, f, g on
-
-      when x"C" =>     -- Display C
-        seg <= "0110001";  -- segments a, d, e, f on
-
-      when x"d" =>     -- Display d
-        seg <= "1000010";  -- segments b, c, d, e, g on
-
-      when x"E" =>
-        seg <= "0110000";
+        
       when others =>
         seg <= "0111000";
     end case;
