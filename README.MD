@@ -26,6 +26,9 @@ This project details the design and implementation of a versatile digital clock 
 Enter a description of the problem and how to solve it.
 Hardware description of demo application
 
+![Conv_diagram](images/Types_Conversion_Diagram.png)
+
+
 Insert descriptive text and schematic(s) of your implementation.
 
 ![Stopwatch](sim/Stopky/README.MD)
