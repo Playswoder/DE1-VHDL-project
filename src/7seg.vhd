@@ -12,7 +12,7 @@ port (
     --SVV : in std_logic_vector(7 downto 0); -- just port it to the SS terminal
     --MODE : in std_logic_vector(1 downto 0); -- will ignore
     seg : out std_logic_vector(6 downto 0) := "0000000"; -- used to forward singular numbers out
-    POS_OUT : out std_logic_vector(5 downto 0) := "000000" -- position of each 7seg disp (should cycle between them)
+    POS_OUT : out std_logic_vector(7 downto 0) := "00000000" -- position of each 7seg disp (should cycle between them)
     -- common anode, so diplay turned on should have value '0' at its anode
 );
 end entity BinTo7seg;
@@ -90,13 +90,13 @@ Pos_converter : process (clk)
 begin
 if rising_edge(clk) then
 case TO_INTEGER(POS_reg) is
-    when 5 => POS_OUT <= "011111"; -- display lights on '0'
-    when 4 => POS_OUT <= "101111";
-    when 3 => POS_OUT <= "110111";
-    when 2 => POS_OUT <= "111011";
-    when 1 => POS_OUT <= "111101";
-    when 0 => POS_OUT <= "111110";
-    when others => POS_OUT <= "111111"; -- all off
+    when 5 => POS_OUT <= "01111111"; -- display lights on '0'
+    when 4 => POS_OUT <= "10111111";
+    when 3 => POS_OUT <= "11011111";
+    when 2 => POS_OUT <= "11101111";
+    when 1 => POS_OUT <= "11110111";
+    when 0 => POS_OUT <= "11111011";
+    when others => POS_OUT <= "11111111"; -- all off
 end case;
 end if;
 end process Pos_converter;
