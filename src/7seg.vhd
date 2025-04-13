@@ -11,8 +11,8 @@ port (
     SS : in std_logic_vector(7 downto 0);
     --SVV : in std_logic_vector(7 downto 0); -- just port it to the SS terminal
     --MODE : in std_logic_vector(1 downto 0); -- will ignore
-    seg : out std_logic_vector(6 downto 0); -- used to forward singular numbers out
-    POS_OUT : out std_logic_vector(5 downto 0) -- position of each 7seg disp (should cycle between them)
+    seg : out std_logic_vector(6 downto 0) := "0000000"; -- used to forward singular numbers out
+    POS_OUT : out std_logic_vector(5 downto 0) := "000000" -- position of each 7seg disp (should cycle between them)
     -- common anode, so diplay turned on should have value '0' at its anode
 );
 end entity BinTo7seg;
