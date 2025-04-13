@@ -28,7 +28,7 @@ end switch;
 architecture Behavioral of switch is
     
 signal sig_mode : unsigned(1 downto 0) := "00";
-
+signal D_prev : std_logic := '0';
 
 
 begin
@@ -40,7 +40,7 @@ begin
             else
                 D_prev <= D; -- Edge detection
                     if D = '1' and D_prev = '0' then
-                        sig_mode = sig_mode + 1;
+                        sig_mode <= sig_mode + 1;
                         else
                         sig_mode <= '0'; 
                     end if;
