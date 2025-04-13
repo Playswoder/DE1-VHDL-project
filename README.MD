@@ -34,6 +34,7 @@ Insert descriptive text and schematic(s) of your implementation.
 ![Stopwatch](sim/Stopky/README.MD)
 
 ![Switch](sim/Switch/README.MD)
+![B27S](sim/BinTo7Seg/README.MD)
 
 
 
