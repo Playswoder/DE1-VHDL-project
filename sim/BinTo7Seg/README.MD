@@ -9,6 +9,10 @@
 
 Describe simulation results
 
+[TB CODE]
+
+[CODE](tb_7Seg.vhd)
+
 
 [IMG simulation result]
 
