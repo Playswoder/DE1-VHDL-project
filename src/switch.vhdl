@@ -9,7 +9,7 @@ entity switch is
     Port ( hh       : in STD_LOGIC_VECTOR (4 downto 0);
            mm       : in STD_LOGIC_VECTOR (5 downto 0);
            ss       : in STD_LOGIC_VECTOR (5 downto 0);
-           D        : in STD_LOGIC_VECTOR (1 downto 0);
+           D        : in std_logic; 
            ahh      : in STD_LOGIC_VECTOR (4 downto 0);
            amm      : in STD_LOGIC_VECTOR (5 downto 0);
            smm      : in STD_LOGIC_VECTOR (5 downto 0);
@@ -35,7 +35,7 @@ begin
  -- pokud to bude dělat latche tak to uděláme synchronní
    Mode_Sel : process(D)
    begin
-            if mode = "10" then
+            if std_logic_vector(sig_mode) = "10" then
                 D_prev <= '0';
             else
                 D_prev <= D; -- Edge detection
