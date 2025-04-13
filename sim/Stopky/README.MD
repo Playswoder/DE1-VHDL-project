@@ -6,6 +6,7 @@
 
 [IMG internal diagram]
 
+![PDF](img/Schematic.pdf)
 
 
 Describe simulation results
