@@ -18,20 +18,39 @@ architecture Behavioral of hodiny is
     signal s_minuty  : integer range 0 to 59 := 0;
     signal s_hodiny  : integer range 0 to 23 := 0;
 
-    signal count : integer range 0 to 99999999; 
+
+    constant SECOND_TC : natural := 1e8; -- počet period CLK100MHz na jednu sekundu
+
+    signal count : natural range 0 to SECOND_TC - 1; 
+    signal second_tick : std_logic := '0';
+
     signal mode_enable  : std_logic := '0';   
 
 begin
-    process (clk100MHz)
+
+
+    -- Tick generation process
+    tick_gen_proc : process(clk100MHz)
+    begin
+        if rising_edge(clk100MHz) then      
+            if count = SECOND_TC - 1 then
+                        count <= 0;
+                        second_tick <= '1'; -- Generate tick
+                    else
+                        count <= count + 1;
+                        second_tick <= '0'; -- Ensure tick remains low
+                    end if;
+                end if;
+    end process tick_gen_proc;
+
+
+    Clock : process (clk100MHz)
     begin
 
         mode_enable <= '1' when mode = "00" else '0'; -- jen když mode je ve stavu "00" bude reagovat na čudlíky
 
-        if rising_edge(clk100MHz) then
-            if mode = 0 then 
-                count <= count + 1;
-                if count = 1000 then 
-                    count <= 0;
+        if rising_edge(clk100MHz) then 
+            if second_tick = '1' and mode_enable = 0 then
                     if s_sekundy = 59 then
                         s_sekundy <= 0;
                         if s_minuty = 59 then
@@ -47,8 +66,8 @@ begin
                     else
                         s_sekundy <= s_sekundy + 1;
                     end if;
-                end if;
-            else 
+            end if;
+        else -- if rising_edge(clk100MHz) nemusí mít else
 
                 if rising_edge(A) then -- změnit
                     if s_hodiny = 23 then
@@ -71,9 +90,7 @@ begin
             if rising_edge(C) then -- mode je input
                 mode <= 1 - mode; 
             end if;
-
-        end if;
-    end process;
+    end process Clock;
 
    
     HH <= std_logic_vector(to_unsigned(s_hodiny, 5));
