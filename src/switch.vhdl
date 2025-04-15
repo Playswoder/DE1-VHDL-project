@@ -32,23 +32,31 @@ signal D_prev : std_logic := '0';
 
 
 begin
- -- pokud to bude dělat latche tak to uděláme synchronní
+
+
+ -- nebo pokud sme to zamíšlely přes switche tak klidně přes ně a tento process nebide třeba
    Mode_Sel : process(D)
    begin
             if std_logic_vector(sig_mode) = "10" then
                 D_prev <= '0';
             else
                 D_prev <= D; -- Edge detection
-                    if D = '1' and D_prev = '0' then
-                        sig_mode <= sig_mode + 1;
+                    
+                        if std_logic_vector(sig_mode) = "11" then
+                            sig_mode <= '0';
                         else
-                        sig_mode <= '0'; 
+                            if D = '1' and D_prev = '0' then
+                                sig_mode <= sig_mode + 1;
                     end if;
                 end if;
-
+            end if;
    end process Mode_Sel;
     
     mode <= std_logic_vector(sig_mode);
+
+
+-- alternativně pokud bude mode řízený přes switche tak výstup mode nemusí existovat na switchi,
+-- ale v top levelu se zapojí sw(1 downto 0) na mode všech ostatních bloků
 
     Switch_proc : process(hh, mm, ss, D, ahh, amm, smm, sss, svv)
     begin
