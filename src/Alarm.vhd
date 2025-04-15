@@ -56,8 +56,11 @@ begin
     -- setting alarm time
     process (mode, A, B)
     begin
+        -- Default assignments to prevent latches
+        alarm_hh <= alarm_hh;
+        alarm_mm <= alarm_mm;
+    
         if (mode = "01") then
-        
             if (A = '1') then
                 if (alarm_hh = x"17") then
                     alarm_hh <= x"00";
@@ -65,7 +68,7 @@ begin
                     alarm_hh <= std_logic_vector(unsigned(alarm_hh) + 1);
                 end if;
             end if;
-            
+    
             if (B = '1') then
                 if (alarm_mm = x"3b") then
                     alarm_mm <= x"00";
@@ -73,14 +76,9 @@ begin
                     alarm_mm <= std_logic_vector(unsigned(alarm_mm) + 1);
                 end if;
             end if;
-            
-        else    
-            
-            
         end if;
-        
-            
     end process;
+    
 
 
 
