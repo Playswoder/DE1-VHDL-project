@@ -12,7 +12,7 @@ architecture tb of tb_BinTo7seg is
               MM      : in std_logic_vector (7 downto 0);
               SS      : in std_logic_vector (7 downto 0);
               seg     : out std_logic_vector (6 downto 0);
-              POS_OUT : out std_logic_vector (5 downto 0));
+              POS_OUT : out std_logic_vector (7 downto 0));
     end component;
 
     signal clk     : std_logic;
@@ -20,7 +20,7 @@ architecture tb of tb_BinTo7seg is
     signal MM      : std_logic_vector (7 downto 0);
     signal SS      : std_logic_vector (7 downto 0);
     signal seg     : std_logic_vector (6 downto 0);
-    signal POS_OUT : std_logic_vector (5 downto 0);
+    signal POS_OUT : std_logic_vector (7 downto 0);
 
     constant TbPeriod : time := 10 ns; -- ***EDIT*** Put right period here
     signal TbClock : std_logic := '0';
