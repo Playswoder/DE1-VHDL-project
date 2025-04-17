@@ -1,7 +1,0 @@
-# compile vhdl design source files
-vhdl xil_defaultlib  \
-"../../../../Stopky.srcs/sources_1/imports/Downloads/stopky.vhd" \
-"../../../../Stopky.srcs/sim_1/imports/Downloads/tb_stopky.vhd" \
-
-# Do not sort compile order
-nosort

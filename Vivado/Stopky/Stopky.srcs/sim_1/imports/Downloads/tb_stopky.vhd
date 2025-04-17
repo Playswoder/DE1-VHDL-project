@@ -66,14 +66,15 @@ begin
         -- Set mode to enable counting
         mode <= "10";
 
-	   wait for 1 ms;
+	wait for 1 ms;
 
-        -- Toggle start/stop signal t   o start the stopwatch
+        -- Toggle start/stop signal to start the stopwatch
         start_stop <= '1';
         wait for clk_period * 2;
         start_stop <= '0';
 
         -- Observe the output for a short time
+        
         -- End simulation
         wait;
     end process stim_proc;
