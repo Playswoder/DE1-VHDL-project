@@ -74,7 +74,10 @@ begin
         start_stop <= '0';
 
         -- Observe the output for a short time
-        
+        wait for 21 ms;
+	    reset <= '1';
+        wait for 20 ns;
+        reset <= '0';
         -- End simulation
         wait;
     end process stim_proc;
