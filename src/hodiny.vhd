@@ -9,9 +9,9 @@ entity hodiny is
         B         : in  std_logic;
         C         : in  std_logic;
         mode      : in std_logic_vector(1 downto 0);
-        HH        : out std_logic_vector(4 downto 0);
-        MM        : out std_logic_vector(5 downto 0);
-        SS        : out std_logic_vector(5 downto 0)
+        HH        : out std_logic_vector(7 downto 0);
+        MM        : out std_logic_vector(7 downto 0);
+        SS        : out std_logic_vector(7 downto 0)
     );
 end entity hodiny;
 
@@ -26,7 +26,7 @@ architecture Behavioral of hodiny is
 
     
     signal A_prev, B_prev, C_prev : std_logic := '0';
-    signal s_mode : std_logic_vector(1 downto 0) := "00";
+  
 
   
     signal temp_hodiny : integer range 0 to 23 := 0;
@@ -34,6 +34,7 @@ architecture Behavioral of hodiny is
 
 begin
 
+       
    
     tick_gen_proc : process(clk100MHz)
     begin
@@ -57,10 +58,10 @@ begin
             B_prev <= B;
             C_prev <= C;
 
-            case s_mode is
+            
 
                
-                when "00" =>
+                
                     if second_tick = '1' then
                         if s_sekundy = 59 then
                             s_sekundy <= 0;
@@ -81,13 +82,13 @@ begin
 
                     
                     if C = '1' and C_prev = '0' then
-                        s_mode <= "01";
+                        
                         temp_hodiny <= s_hodiny;
                         temp_minuty <= s_minuty;
                     end if;
-
+case mode is
                 
-                when "01" =>
+                when "00" =>
                    
                     if A = '1' and A_prev = '0' then
                         if temp_hodiny = 23 then
@@ -110,13 +111,16 @@ begin
                         s_hodiny <= temp_hodiny;
                         s_minuty <= temp_minuty;
                         s_sekundy <= 0;
-                        s_mode <= "00"; 
+                         
                     end if;
 
-                when others =>
-                    s_mode <= "00";
+                  when others => null;
 
-            end case;
-        end if;
-    end process;
-
+                end case;
+            end if;
+        end process;
+    SS <= std_logic_vector(TO_UNSIGNED(s_sekundy, 8));
+    MM <= std_logic_vector(TO_UNSIGNED(s_minuty,8));
+    HH <= std_logic_vector(TO_UNSIGNED(s_hodiny,8));
+       
+    end Behavioral;
