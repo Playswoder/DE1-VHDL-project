@@ -1,0 +1,4 @@
+Running: xsim.dir/hodiny_tb_behav/xsimk.exe -simmode gui -wdb hodiny_tb_behav.wdb -simrunnum 0 -socket 51785
+Design successfully loaded
+Design Loading Memory Usage: 6396 KB (Peak: 6396 KB)
+Design Loading CPU Usage: 31 ms
