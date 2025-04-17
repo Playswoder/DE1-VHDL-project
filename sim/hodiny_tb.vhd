@@ -7,28 +7,46 @@ entity hodiny_tb is
 end entity hodiny_tb;
 
 architecture Behavioral of hodiny_tb is
+
+component hodiny 
+
+port(
+        clk100MHz : in  std_logic;
+        A         : in  std_logic;
+        B         : in  std_logic;
+        C         : in  std_logic;
+        mode      : in std_logic_vector(1 downto 0):= "00";
+        HH        : out std_logic_vector(7 downto 0);
+        MM        : out std_logic_vector(7 downto 0);
+        SS        : out std_logic_vector(7 downto 0)
+    );
+end component ;
    
     signal clk100MHz_tb : std_logic := '0';
     signal A_tb         : std_logic := '0';
     signal B_tb         : std_logic := '0';
     signal C_tb         : std_logic := '0';
-    signal HH_tb        : std_logic_vector(4 downto 0);
-    signal MM_tb        : std_logic_vector(5 downto 0);
-    signal SS_tb        : std_logic_vector(5 downto 0);
+    signal HH_tb        : std_logic_vector(7 downto 0);
+    signal MM_tb        : std_logic_vector(7 downto 0);
+    signal SS_tb        : std_logic_vector(7 downto 0);
 
     
     constant clk_period : time := 10 ns;
 
+
 begin
     
-    uut: entity work.hodiny
+    uut: hodiny 
         port map ( clk100MHz => clk100MHz_tb,
                    A         => A_tb,
                    B         => B_tb,
                    C         => C_tb,
+                   
                    HH        => HH_tb,
                    MM        => MM_tb,
-                   SS        => SS_tb );
+                   SS        => SS_tb 
+            );
+                   
 
     
     clk_process: process
@@ -82,7 +100,6 @@ begin
         
         wait;
 
-        report "Konec simulace";
         
     	end process;
     end architecture Behavioral;
