@@ -6,21 +6,19 @@ use UNISIM.VComponents.all;
 
 entity switch is
 
-    Port ( hh       : in STD_LOGIC_VECTOR (4 downto 0);
-           mm       : in STD_LOGIC_VECTOR (5 downto 0);
-           ss       : in STD_LOGIC_VECTOR (5 downto 0);
-           D        : in std_logic; 
-           ahh      : in STD_LOGIC_VECTOR (4 downto 0);
-           amm      : in STD_LOGIC_VECTOR (5 downto 0);
-           smm      : in STD_LOGIC_VECTOR (5 downto 0);
-           sss      : in STD_LOGIC_VECTOR (5 downto 0);
-           svv      : in STD_LOGIC_VECTOR (6 downto 0);
+    Port ( hh       : in STD_LOGIC_VECTOR (7 downto 0);
+           mm       : in STD_LOGIC_VECTOR (7 downto 0);
+           ss       : in STD_LOGIC_VECTOR (7 downto 0);
+           D        : in std_logic_vector (1 downto 0); 
+           ahh      : in STD_LOGIC_VECTOR (7 downto 0);
+           amm      : in STD_LOGIC_VECTOR (7 downto 0);
+           smm      : in STD_LOGIC_VECTOR (7 downto 0);
+           sss      : in STD_LOGIC_VECTOR (7 downto 0);
+           svv      : in STD_LOGIC_VECTOR (7 downto 0);
            
-           fhh      : out STD_LOGIC_VECTOR (4 downto 0);
-           fmm      : out STD_LOGIC_VECTOR (5 downto 0);
-           fss      : out STD_LOGIC_VECTOR (5 downto 0);
-           fvv      : out STD_LOGIC_VECTOR (6 downto 0);
-           mode     : out STD_LOGIC_VECTOR (1 downto 0)
+           fhh      : out STD_LOGIC_VECTOR (7 downto 0);
+           fmm      : out STD_LOGIC_VECTOR (7 downto 0);
+           fss      : out STD_LOGIC_VECTOR (7 downto 0)
            );
            
 end switch;
@@ -33,56 +31,25 @@ signal D_prev : std_logic := '0';
 
 begin
 
-
- -- nebo pokud sme to zamíšlely přes switche tak klidně přes ně a tento process nebide třeba
-   Mode_Sel : process(D)
-   begin
-            if std_logic_vector(sig_mode) = "10" then
-                D_prev <= '0';
-            else
-                D_prev <= D; -- Edge detection
-                    
-                        if std_logic_vector(sig_mode) = "11" then
-                            sig_mode <= '0';
-                        else
-                            if D = '1' and D_prev = '0' then
-                                sig_mode <= sig_mode + 1;
-                    end if;
-                end if;
-            end if;
-   end process Mode_Sel;
-    
-    mode <= std_logic_vector(sig_mode);
-
-
--- alternativně pokud bude mode řízený přes switche tak výstup mode nemusí existovat na switchi,
--- ale v top levelu se zapojí sw(1 downto 0) na mode všech ostatních bloků
-
-    Switch_proc : process(hh, mm, ss, D, ahh, amm, smm, sss, svv)
+    Switch_proc : process(hh, mm, ss, D, ahh, amm, smm, sss, svv, sig_mode)
     begin
-        mode <= "00";
-        fhh <= (others => '0');
-        fmm <= (others => '0');
-        fss <= (others => '0');
-        fvv <= (others => '0');
-        case std_logic_vector(sig_mode) is
+        case D is
             when "00" =>
                 fhh <= hh;
                 fmm <= mm;
                 fss <= ss;
-                fvv <= "0000000";
             when "01" =>
                 fhh <= ahh;
                 fmm <= amm;
-                fss <= "000000";
-                fvv <= "0000000";
+                fss <= "00000000";
             when "10" =>
-                fhh <= "00000";
-                fmm <= smm;
-                fss <= sss;
-                fvv <= svv;
+                fhh <= smm;
+                fmm <= sss;
+                fss <= svv;
             when others =>
-                mode <= "00";
+                fhh <= (others => '0');
+                fmm <= (others => '0');
+                fss <= (others => '0');
         end case;
     end process Switch_proc;
 end Behavioral;
