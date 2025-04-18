@@ -17,7 +17,7 @@ entity top_level is
         CF: out std_logic;
         CG: out std_logic;
         DP: out std_logic;
-        AN: out std_logic_vector(7 downto 0);
+        AN: out std_logic_vector(7 downto 0)
     );
 end entity top_level;
 
@@ -47,15 +47,16 @@ architecture behavioral of top_level is
     end component;
 
     component hodiny is
-    Port ( clk100MHz : in  std_logic;
-           A         : in  std_logic;
-           B         : in  std_logic;
-           C         : in  std_logic;
-           mode      : in std_logic_vector(1 downto 0);
-           HH        : out std_logic_vector(4 downto 0); 
-           MM        : out std_logic_vector(5 downto 0); 
-           SS        : out std_logic_vector(5 downto 0)  
-         );
+    Port (
+        clk100MHz : in  std_logic;
+        A         : in  std_logic;
+        B         : in  std_logic;
+        C         : in  std_logic;
+        mode      : in std_logic_vector(1 downto 0);
+        HH        : out std_logic_vector(7 downto 0);
+        MM        : out std_logic_vector(7 downto 0);
+        SS        : out std_logic_vector(7 downto 0)
+    );
     end component;
 
     component alarm is
@@ -90,17 +91,23 @@ architecture behavioral of top_level is
     end component;
 
 -- signals for Switch to B27S
-signal SIG_S2BHH std_logic_vector(7 downto 0);
-signal SIG_S2BMM STD_LOGIC_VECTOR(7 downto 0);
-signal SIG_S2BSS STD_LOGIC_VECTOR(7 downto 0);
+
+signal SIG_S2BHH : STD_LOGIC_VECTOR(7 downto 0);
+signal SIG_S2BMM : STD_LOGIC_VECTOR(7 downto 0);
+signal SIG_S2BSS : STD_LOGIC_VECTOR(7 downto 0);
 
 -- Mode signal
-signal SIG_MODE STD_LOGIC_VECTOR(1 downto 0);
+signal SIG_MODE : STD_LOGIC_VECTOR(1 downto 0);
 
 -- signal for stopwatch to Switch
-signal SIG_SW2SMM std_logic_vector(7 downto 0);
-signal SIG_SW2SSS std_logic_vector(7 downto 0);
-signal SIG_SW2SCS std_logic_vector(7 downto 0);
+signal SIG_SW2SMM : std_logic_vector(7 downto 0);
+signal SIG_SW2SSS : std_logic_vector(7 downto 0);
+signal SIG_SW2SCS : std_logic_vector(7 downto 0);
+
+-- signal for clock to Switch
+signal SIG_C2SHH : std_logic_vector(7 downto 0);
+signal SIG_C2SMM : std_logic_vector(7 downto 0);
+signal SIG_C2SSS : std_logic_vector(7 downto 0);
 
 begin
 
@@ -131,7 +138,17 @@ port map(
     smm => SIG_SW2SMM  -- Minutes (00-59)
 );
 
-
+clock : hodiny
+    port map (
+        clk100MHz => CLK100MHz,
+        A => BTNA,
+        B => BTNB,
+        C => BTNC,
+        mode => SIG_MODE,
+        HH => SIG_C2SHH,
+        MM => SIG_C2SMM,
+        SS => SIG_C2SSS
+    );
 
 
 
