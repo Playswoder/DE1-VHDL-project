@@ -37,7 +37,7 @@ entity Alarm is
            mode : in STD_LOGIC_VECTOR (1 downto 0);
            A : in STD_LOGIC;
            B : in STD_LOGIC;
-           C : in STD_LOGIC;
+           CLK100MHZ : in STD_LOGIC;
            ahh : out STD_LOGIC_VECTOR (7 downto 0);
            amm : out STD_LOGIC_VECTOR (7 downto 0);
            alarm_out : out STD_LOGIC);
@@ -45,41 +45,66 @@ end Alarm;
 
 architecture Behavioral of Alarm is
 
-signal alarm_hh : std_logic_vector(7 downto 0) := "00000000";
-signal alarm_mm : std_logic_vector(7 downto 0) := "00000000";
+signal alarm_hh : std_logic_vector(7 downto 0) := "00010111";
+signal alarm_mm : std_logic_vector(7 downto 0) := "00111011";
 
 begin
-    -- default value for clock
-    --alarm_hh <= x"17";
-    --alarm_mm <= x"3b";
 
-    -- setting alarm time
-    process (mode, A, B)
-    begin
-        -- Default assignments to prevent latches
-        alarm_hh <= alarm_hh;
-        alarm_mm <= alarm_mm;
-    
-        if (mode = "01") then
-            if (A = '1') then
-                if (alarm_hh = x"17") then
-                    alarm_hh <= x"00";
-                else
-                    alarm_hh <= std_logic_vector(unsigned(alarm_hh) + 1);
-                end if;
-            end if;
-    
-            if (B = '1') then
-                if (alarm_mm = x"3b") then
-                    alarm_mm <= x"00";
-                else
-                    alarm_mm <= std_logic_vector(unsigned(alarm_mm) + 1);
-                end if;
-            end if;
-        end if;
-    end process;
-    
 
+        -- default value for clock
+        --alarm_hh <= x"17";
+        --alarm_mm <= x"3b";
+    
+        -- setting alarm time
+        process (mode, A, CLK100MHZ)
+        begin
+            if (mode = "01" and rising_edge (CLK100MHZ)) then
+            
+                if (A = '1') then
+                    if (alarm_hh = x"17") then
+                        alarm_hh <= x"00";
+                    else
+                        alarm_hh <= std_logic_vector(unsigned(alarm_hh) + 1);
+                    end if;
+                else    
+               
+                   alarm_hh <= alarm_hh; 
+                
+                end if;
+                
+            else
+                    
+                alarm_hh <= alarm_hh;
+                
+            end if;
+            
+                
+        end process;
+        
+        process (mode, B, CLK100MHZ)
+        begin
+            if (mode = "01" and rising_edge (CLK100MHZ)) then
+                
+                if (B = '1') then
+                    if (alarm_mm = x"3b") then
+                        alarm_mm <= x"00";
+                    else
+                        alarm_mm <= std_logic_vector(unsigned(alarm_mm) + 1);
+                    end if;
+                    
+                else    
+            
+                alarm_mm <= alarm_mm;
+                
+                end if;
+                
+            else    
+                alarm_mm <= alarm_mm;
+                
+            end if;
+            
+                
+        end process;
 
 
     -- Output the alarm set values
