@@ -11,10 +11,10 @@ This project details the design and implementation of a versatile digital clock 
 
 **The main contributions of the project are:**
 
-    Pochyčenkovič (je zodpovědný za - )
-    Matějkin      (je zodpovědný za - )
-    Annovična     (je zodpovědný za - )
-    Kubínovič     (je zodpovědný za - )
+    Pochyčenkovič (Sedmisegmentovku, Stopky )
+    Matějkin      (Hodiny )
+    Annovična     (Switch )
+    Kubínovič     (Alarm )
     
 ![Schema](images/schema.jpg)
                     
