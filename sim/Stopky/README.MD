@@ -13,4 +13,8 @@ Describe simulation results
 
 
 [IMG simulation result]
-![image](img/tb_stopky.png)
+In this simulation stopwatch start counting correctly
+![image](img/tb_stopky_start.png)
+
+In this simulation individual counters correctly stop at their supposed values
+![image](img/tb_stopky_over.png)
