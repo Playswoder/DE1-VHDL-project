@@ -39,7 +39,7 @@ end debouncer;
 
 architecture Behavioral of debouncer is
 
-constant SECOND01 : natural := 10_000_000;
+constant SECOND01 : natural := 4_000_000;
 signal count : natural range 0 to SECOND01 - 1;
 signal second_tick01 : STD_LOGIC := '0';
   
