@@ -63,6 +63,7 @@ begin
         end process;
 
         process (CLK100MHZ)
+        begin
               if (rising_edge (CLK100MHZ) and second_tick01 = '1') then
                 output <= input;
               end if;
