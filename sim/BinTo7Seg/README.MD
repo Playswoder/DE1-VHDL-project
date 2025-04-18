@@ -16,4 +16,5 @@ Describe simulation results
 
 [IMG simulation result]
 
+In this simulation the block is correctly converting input values to 7 seg display and outputs correct display position
 ![image](img/tb_Bin27Seg.jpg)
