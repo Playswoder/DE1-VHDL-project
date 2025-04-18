@@ -75,9 +75,9 @@ begin
         input <= '0';
         wait for 4ms;
         input <= '1';
-        wait for 1ms;
+        wait for 50ms;
         input <= '0';
-        wait for 500ms;
+        wait for 200ms;
 
 
         input <= '1';
@@ -109,7 +109,7 @@ begin
         input <= '0';
         wait for 4ms;
         input <= '1';
-        wait for 1ms;
+        wait for 50ms;
         input <= '0';
         wait for 100ms;
 
