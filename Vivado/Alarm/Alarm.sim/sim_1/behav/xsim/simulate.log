@@ -1,0 +1,5 @@
+Time resolution is 1 ps
+Note: ==== START ====
+Time: 30 ns  Iteration: 0  Process: /tb_Alarm/stimuli  File: G:/Vivado/Alarm/Alarm.srcs/sim_1/imports/Downloads/Alarm_tb.vhd
+Note: ==== STOP ====
+Time: 545 ns  Iteration: 0  Process: /tb_Alarm/stimuli  File: G:/Vivado/Alarm/Alarm.srcs/sim_1/imports/Downloads/Alarm_tb.vhd
