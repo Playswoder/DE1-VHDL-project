@@ -136,6 +136,8 @@ signal  SIG_A2SMM : std_logic_vector (7 downto 0);
 
 begin
 
+SIG_MODE <= SW;
+
 B27S : BinTo7seg
 port map(
     clk => CLK100MHZ,
