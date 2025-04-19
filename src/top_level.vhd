@@ -227,7 +227,7 @@ switch_block : switch
  Debounce_BTNC : debounce
     port map (
         clk  => CLK100MHZ,
-        btn_in  => BTNA,
+        btn_in  => BTNC,
         btn_out => SIG_OPEN,
         edge =>  SIG_OPEN,
         rise =>  SIG_BTNC,
