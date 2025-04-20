@@ -4,6 +4,7 @@ This block acts as a stopwatch with MM:SS:CS output logic vectors
 
 ![Integral diagram PDF](img/Schematic.pdf)
 
+## Simulation results
 In this simulation stopwatch start counting correctly
 ![image](img/tb_stopky_start.png)
 
