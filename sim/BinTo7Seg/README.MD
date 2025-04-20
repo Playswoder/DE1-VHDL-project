@@ -1,5 +1,5 @@
 # BinTo7Seg
-This block converts HH:MM:SS input to 6 7-segment displays
+This block converts HH:MM:SS input to 6 7-segment displays.
 
 ![Internal diagram PDF](img/Schematic.pdf)
 
