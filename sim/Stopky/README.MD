@@ -1,18 +1,9 @@
 
 # Stopky
+This block acts as a stopwatch with MM:SS:CS output logic vectors
 
-3 up country zapojený za sebou
+![Integral diagram PDF](img/Schematic.pdf)
 
-
-[IMG internal diagram]
-
-![PDF](img/Schematic.pdf)
-
-
-Describe simulation results
-
-
-[IMG simulation result]
 In this simulation stopwatch start counting correctly
 ![image](img/tb_stopky_start.png)
 
