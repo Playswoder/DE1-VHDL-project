@@ -11,7 +11,7 @@ This project details the design and implementation of a versatile digital clock 
 
 **The main contributions of the project are:**
 
-    Pochyčenkovič (Sedmisegmentovku, Stopky )
+    Pochyčenkovič (Sedmisegmentovku, Stopky, Top_level )
     Matějkin      (Hodiny )
     Annovična     (Switch )
     Kubínovič     (Alarm )
