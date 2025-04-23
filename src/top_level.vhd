@@ -8,7 +8,6 @@ entity top_level is
         BTNA : in std_logic;
         BTNB : in std_logic;
         BTNC : in std_logic;
-        BTND : in std_logic;
         SW: in std_logic_vector(1 downto 0);
         LED16_B : out std_logic;
         CA: out std_logic;
@@ -62,15 +61,15 @@ architecture behavioral of top_level is
     end component;
 
     component Alarm is
-    Port ( hh : in STD_LOGIC_VECTOR (7 downto 0);
+       Port ( hh : in STD_LOGIC_VECTOR (7 downto 0);
            mm : in STD_LOGIC_VECTOR (7 downto 0);
            mode : in STD_LOGIC_VECTOR (1 downto 0);
            A : in STD_LOGIC;
            B : in STD_LOGIC;
+           CLK100MHZ : in STD_LOGIC;
            ahh : out STD_LOGIC_VECTOR (7 downto 0);
            amm : out STD_LOGIC_VECTOR (7 downto 0);
-           alarm_out : out STD_LOGIC
-           );
+           alarm_out : out STD_LOGIC);
     end component;
 
     component switch is
@@ -108,8 +107,7 @@ end component debounce;
 signal SIG_OPEN : std_logic;
 signal SIG_BTNA : std_logic;
 signal SIG_BTNB : std_logic;
-signal SIG_BTNC : std_logic;
-signal SIG_BTND : std_logic;    
+signal SIG_BTNC : std_logic; 
     
 
 -- signals for Switch to B27S
@@ -159,7 +157,7 @@ port map(
     clk => CLK100MHZ,
     reset => SIG_BTNA,
     mode => SIG_MODE,
-    start_stop => SIG_BTNB,
+    start_stop => SIG_BTNB, -- *EDIT
     svv => SIG_SW2SCS, -- Centiseconds (00-99)
     sss => SIG_SW2SSS, -- Seconds (00-59)
     smm => SIG_SW2SMM  -- Minutes (00-59)
@@ -196,6 +194,7 @@ switch_block : switch
            
  Alarm_block : Alarm
      Port map ( 
+           CLK100MHZ => CLK100MHZ,      
            hh => SIG_C2SHH,
            mm => SIG_C2SMM,
            mode => SIG_MODE,
@@ -210,9 +209,9 @@ switch_block : switch
     port map (
         clk  => CLK100MHZ,
         btn_in  => BTNA,
-        btn_out => SIG_OPEN,
+        btn_out => SIG_BTNA,
         edge =>  SIG_OPEN,
-        rise =>  SIG_BTNA,
+        rise =>  SIG_OPEN,
         fall => SIG_OPEN
     );
 
@@ -220,9 +219,9 @@ switch_block : switch
     port map (
         clk  => CLK100MHZ,
         btn_in  => BTNB,
-        btn_out => SIG_OPEN,
+        btn_out => SIG_BTNB,
         edge =>  SIG_OPEN,
-        rise =>  SIG_BTNB,
+        rise =>  SIG_OPEN,
         fall => SIG_OPEN
     );
 
@@ -230,22 +229,11 @@ switch_block : switch
     port map (
         clk  => CLK100MHZ,
         btn_in  => BTNC,
-        btn_out => SIG_OPEN,
+        btn_out => SIG_BTNC,
         edge =>  SIG_OPEN,
-        rise =>  SIG_BTNC,
+        rise =>  SIG_OPEN,
         fall => SIG_OPEN
     );
-    
- Debounce_BTND : debounce
-    port map (
-        clk  => CLK100MHZ,
-        btn_in  => BTND,
-        btn_out => SIG_OPEN,
-        edge =>  SIG_OPEN,
-        rise =>  SIG_BTND,
-        fall => SIG_OPEN
-    );
-
 
 DP <= '1';
 
