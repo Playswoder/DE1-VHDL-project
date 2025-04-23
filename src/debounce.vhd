@@ -9,10 +9,10 @@ entity debounce is
     port (
         clk     : in    std_logic;
         btn_in  : in    std_logic; -- Asynchronous and noisy input
-        btn_out : out   std_logic; -- Synchronised, debounced and filtered output
-        edge    : out   std_logic;
-        rise    : out   std_logic;
-        fall    : out   std_logic
+        btn_out : out   std_logic := '0'; -- Synchronised, debounced and filtered output
+        edge    : out   std_logic := '0';
+        rise    : out   std_logic := '0';
+        fall    : out   std_logic := '0'
     );
 end entity debounce;
 
@@ -24,7 +24,7 @@ architecture v1 of debounce is
     signal sync_buffer : std_logic_vector(SYNC_BITS - 1 downto 0);
     alias  sync_input  : std_logic is sync_buffer(SYNC_BITS - 1);
     signal sig_count   : natural range 0 to MAX_COUNT - 1;
-    signal sig_btn     : std_logic;
+    signal sig_btn     : std_logic := '0';
 
 begin
     p_debounce : process (clk) is
