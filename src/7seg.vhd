@@ -25,7 +25,7 @@ end entity BinTo7seg;
     signal POS_reg : unsigned(2 downto 0) := (others => '0');
     
     constant n7SegDisp : integer := 6;
-    constant MILISECOND_TC : natural := 100_000;
+    constant MILISECOND_TC : natural := 25_000; -- should not be <25_000 default(100_000)
 
     signal clk_counter : natural range 0 to MILISECOND_TC - 1 := 0;
     signal milisecond_tick : std_logic := '0';
