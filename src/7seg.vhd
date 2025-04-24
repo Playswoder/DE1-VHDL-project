@@ -7,8 +7,6 @@ ENTITY BinTo7seg IS
 		HH : IN std_logic_vector(7 DOWNTO 0); -- all will have united length
 		MM : IN std_logic_vector(7 DOWNTO 0);
 		SS : IN std_logic_vector(7 DOWNTO 0);
-		--SVV : in std_logic_vector(7 downto 0); -- just port it to the SS terminal
-		--MODE : in std_logic_vector(1 downto 0); -- will ignore
 		seg : OUT std_logic_vector(6 DOWNTO 0) := "0000000"; -- used to forward singular numbers out
 		POS_OUT : OUT std_logic_vector(7 DOWNTO 0) := "00000000"; -- position of each 7seg disp (should cycle between them)
 		DP : OUT std_logic
