@@ -1,6 +1,8 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
+library UNISIM;
+use UNISIM.VComponents.all;
 
 entity switch is
 
@@ -13,7 +15,7 @@ entity switch is
            smm      : in STD_LOGIC_VECTOR (7 downto 0);
            sss      : in STD_LOGIC_VECTOR (7 downto 0);
            svv      : in STD_LOGIC_VECTOR (7 downto 0);
-           
+           clk      : in STD_LOGIC;
            fhh      : out STD_LOGIC_VECTOR (7 downto 0);
            fmm      : out STD_LOGIC_VECTOR (7 downto 0);
            fss      : out STD_LOGIC_VECTOR (7 downto 0)
@@ -31,23 +33,25 @@ begin
 
     Switch_proc : process(hh, mm, ss, D, ahh, amm, smm, sss, svv, sig_mode)
     begin
-        case D is
-            when "00" =>
-                fhh <= hh;
-                fmm <= mm;
-                fss <= ss;
-            when "01" =>
-                fhh <= ahh;
-                fmm <= amm;
-                fss <= "00000000";
-            when "10" =>
-                fhh <= smm;
-                fmm <= sss;
-                fss <= svv;
-            when others =>
-                fhh <= (others => '0');
-                fmm <= (others => '0');
-                fss <= (others => '0');
-        end case;
+        if rising_edge(clk)
+            case D is
+                when "00" =>
+                    fhh <= hh;
+                    fmm <= mm;
+                    fss <= ss;
+                when "01" =>
+                    fhh <= ahh;
+                    fmm <= amm;
+                    fss <= "00000000";
+                when "10" =>
+                    fhh <= smm;
+                    fmm <= sss;
+                    fss <= svv;
+                when others =>
+                    fhh <= (others => '0');
+                    fmm <= (others => '0');
+                    fss <= (others => '0');
+            end case;
+        end if;
     end process Switch_proc;
 end Behavioral;
