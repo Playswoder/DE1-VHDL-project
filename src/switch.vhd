@@ -33,7 +33,7 @@ begin
 
     Switch_proc : process(hh, mm, ss, D, ahh, amm, smm, sss, svv, sig_mode)
     begin
-        if rising_edge(clk)
+        if rising_edge(clk) then
             case D is
                 when "00" =>
                     fhh <= hh;

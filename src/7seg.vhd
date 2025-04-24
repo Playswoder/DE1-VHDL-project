@@ -125,11 +125,13 @@ BEGIN
 
 	Dec_point : PROCESS (clk)
 	BEGIN
-		CASE TO_INTEGER (pos_reg) IS
-			WHEN 4 => DP <= '0';
-			WHEN 2 => DP <= '0';
-			WHEN OTHERS => DP <= '1';
-		END CASE;
+		if rising_edge(clk) THEN
+			CASE TO_INTEGER (pos_reg) IS
+				WHEN 4 => DP <= '0';
+				WHEN 2 => DP <= '0';
+				WHEN OTHERS => DP <= '1';
+			END CASE;
+		end if;
 	END PROCESS;
 
 END ARCHITECTURE behavioral;
