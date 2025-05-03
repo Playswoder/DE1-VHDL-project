@@ -1,105 +1,100 @@
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
+ENTITY hodiny_tb IS
+END ENTITY hodiny_tb;
 
+ARCHITECTURE Behavioral OF hodiny_tb IS
 
-entity hodiny_tb is
-end entity hodiny_tb;
+	COMPONENT hodiny
 
-architecture Behavioral of hodiny_tb is
+		PORT (
+			clk100MHz : IN std_logic;
+			A : IN std_logic;
+			B : IN std_logic;
+			C : IN std_logic;
+			mode : IN std_logic_vector(1 DOWNTO 0) := "00";
+			HH : OUT std_logic_vector(7 DOWNTO 0);
+			MM : OUT std_logic_vector(7 DOWNTO 0);
+			SS : OUT std_logic_vector(7 DOWNTO 0)
+		);
+	END COMPONENT;
+ 
+	SIGNAL clk100MHz_tb : std_logic := '0';
+	SIGNAL A_tb : std_logic := '0';
+	SIGNAL B_tb : std_logic := '0';
+	SIGNAL C_tb : std_logic := '0';
+	SIGNAL HH_tb : std_logic_vector(7 DOWNTO 0);
+	SIGNAL MM_tb : std_logic_vector(7 DOWNTO 0);
+	SIGNAL SS_tb : std_logic_vector(7 DOWNTO 0);
 
-component hodiny 
+ 
+	CONSTANT clk_period : TIME := 10 ns;
+BEGIN
+	uut : hodiny
+	PORT MAP(
+		clk100MHz => clk100MHz_tb, 
+		A => A_tb, 
+		B => B_tb, 
+		C => C_tb, 
+ 
+		HH => HH_tb, 
+		MM => MM_tb, 
+		SS => SS_tb
+	);
+ 
 
-port(
-        clk100MHz : in  std_logic;
-        A         : in  std_logic;
-        B         : in  std_logic;
-        C         : in  std_logic;
-        mode      : in std_logic_vector(1 downto 0):= "00";
-        HH        : out std_logic_vector(7 downto 0);
-        MM        : out std_logic_vector(7 downto 0);
-        SS        : out std_logic_vector(7 downto 0)
-    );
-end component ;
-   
-    signal clk100MHz_tb : std_logic := '0';
-    signal A_tb         : std_logic := '0';
-    signal B_tb         : std_logic := '0';
-    signal C_tb         : std_logic := '0';
-    signal HH_tb        : std_logic_vector(7 downto 0);
-    signal MM_tb        : std_logic_vector(7 downto 0);
-    signal SS_tb        : std_logic_vector(7 downto 0);
+ 
+	clk_process : PROCESS
+	BEGIN
+		LOOP
+		clk100MHz_tb <= '0';
+		WAIT FOR clk_period / 2;
+		clk100MHz_tb <= '1';
+		WAIT FOR clk_period / 2;
+	END LOOP;
+	END PROCESS;
 
-    
-    constant clk_period : time := 10 ns;
+ 
+	stimulus_process : PROCESS
+	BEGIN
+		A_tb <= '0';
+		B_tb <= '0';
+		C_tb <= '0';
+		WAIT FOR 20 ns;
 
+		WAIT FOR 5000 ms;
 
-begin
-    
-    uut: hodiny 
-        port map ( clk100MHz => clk100MHz_tb,
-                   A         => A_tb,
-                   B         => B_tb,
-                   C         => C_tb,
-                   
-                   HH        => HH_tb,
-                   MM        => MM_tb,
-                   SS        => SS_tb 
-            );
-                   
+		C_tb <= '1';
+		WAIT FOR clk_period;
+		C_tb <= '0';
+		WAIT FOR 20 ns;
 
-    
-    clk_process: process
-    begin
-        loop
-            clk100MHz_tb <= '0';
-            wait for clk_period / 2;
-            clk100MHz_tb <= '1';
-            wait for clk_period / 2;
-        end loop;
-    end process;
-
-    
-    stimulus_process: process
-    begin
-
-        A_tb <= '0';
-        B_tb <= '0';
-        C_tb <= '0';
-        wait for 20 ns;
-
-        wait for 5000 ms; 
-
-        C_tb <= '1';
-        wait for clk_period;
-        C_tb <= '0';
-        wait for 20 ns;
-
-        for i in 1 to 5 loop
-            A_tb <= '1';
-            wait for clk_period;
-            A_tb <= '0';
-            wait for 2 * clk_period;
-        end loop;
-        wait for 1000 ms;
-        
-        A_tb <= '1';
-		wait for 5 * clk_period;
+		FOR i IN 1 TO 5 LOOP
+			A_tb <= '1';
+			WAIT FOR clk_period;
+			A_tb <= '0';
+			WAIT FOR 2 * clk_period;
+		END LOOP;
+		WAIT FOR 1000 ms;
+ 
+		A_tb <= '1';
+		WAIT FOR 5 * clk_period;
 		A_tb <= '0';
 
-        B_tb <= '1';
-        wait for clk_period;
-        B_tb <= '0';
-        wait for 2 * clk_period;
-        wait for 1000 ms; 
+		B_tb <= '1';
+		WAIT FOR clk_period;
+		B_tb <= '0';
+		WAIT FOR 2 * clk_period;
+		WAIT FOR 1000 ms;
 
-        C_tb <= '1';
-        wait for clk_period;
-        C_tb <= '0';
-        wait for 5000 ms;
-        
-        wait;
+		C_tb <= '1';
+		WAIT FOR clk_period;
+		C_tb <= '0';
+		WAIT FOR 5000 ms;
+ 
+		WAIT;
 
-        
-    	end process;
-    end architecture Behavioral;
+ 
+	END PROCESS;
+END ARCHITECTURE Behavioral;

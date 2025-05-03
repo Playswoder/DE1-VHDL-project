@@ -7,7 +7,6 @@ ENTITY top_level IS
 		CLK100MHZ : IN std_logic; -- Clock 10 ns
 		BTNA : IN std_logic;
 		BTNB : IN std_logic;
-		BTNC : IN std_logic;
 		SW : IN std_logic_vector(1 DOWNTO 0);
 		LED16_B : OUT std_logic;
 		CA : OUT std_logic;
@@ -53,7 +52,6 @@ ARCHITECTURE behavioral OF top_level IS
 			clk100MHz : IN std_logic;
 			A : IN std_logic;
 			B : IN std_logic;
-			C : IN std_logic;
 			mode : IN std_logic_vector(1 DOWNTO 0);
 			HH : OUT std_logic_vector(7 DOWNTO 0);
 			MM : OUT std_logic_vector(7 DOWNTO 0);
@@ -174,7 +172,6 @@ BEGIN
 		clk100MHz => CLK100MHZ, 
 		A => SIG_BTNARise, 
 		B => SIG_BTNBRise, 
-		C => SIG_BTNCRise, 
 		mode => SIG_MODE, 
 		HH => SIG_C2SHH, 
 		MM => SIG_C2SMM, 
@@ -231,13 +228,4 @@ BEGIN
 		fall => SIG_OPEN
 	);
 
-	Debounce_BTNC : debounce
-	PORT MAP(
-		clk => CLK100MHZ, 
-		btn_in => BTNC, 
-		btn_out => SIG_BTNC, 
-		edge => SIG_OPEN, 
-		rise => SIG_BTNCRise, 
-		fall => SIG_OPEN
-	);
 END ARCHITECTURE behavioral;

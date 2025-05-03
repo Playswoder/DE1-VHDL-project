@@ -4,13 +4,12 @@ USE ieee.numeric_std.ALL;
 ENTITY BinTo7seg IS
 	PORT (
 		clk : IN std_logic;
-		HH : IN std_logic_vector(7 DOWNTO 0); -- all will have united length
+		HH : IN std_logic_vector(7 DOWNTO 0);
 		MM : IN std_logic_vector(7 DOWNTO 0);
 		SS : IN std_logic_vector(7 DOWNTO 0);
-		seg : OUT std_logic_vector(6 DOWNTO 0) := "0000000"; -- used to forward singular numbers out
-		POS_OUT : OUT std_logic_vector(7 DOWNTO 0) := "00000000"; -- position of each 7seg disp (should cycle between them)
+		seg : OUT std_logic_vector(6 DOWNTO 0) := "0000000"; 
+		POS_OUT : OUT std_logic_vector(7 DOWNTO 0) := "00000000"; 
 		DP : OUT std_logic
-		-- common anode, so diplay turned on should have value '0' at its anode
 	);
 END ENTITY BinTo7seg;
 
@@ -18,7 +17,7 @@ ARCHITECTURE behavioral OF BinTo7seg IS
 	SIGNAL digit0 : INTEGER RANGE 0 TO 9;
 
 	SIGNAL POS_reg : unsigned(2 DOWNTO 0) := (OTHERS => '0');
- 
+
 	CONSTANT n7SegDisp : INTEGER := 6;
 	CONSTANT MILISECOND_TC : NATURAL := 25_000; -- should not be <25_000 default(100_000)
 
@@ -56,8 +55,8 @@ BEGIN
 	BEGIN
 		IF rising_edge(clk) THEN
 			CASE TO_INTEGER(POS_reg) IS
-				WHEN 5 => digit0 <= to_integer(unsigned(HH)) / 10; -- Convert to integer before dividing
-				WHEN 4 => digit0 <= to_integer(unsigned(HH)) MOD 10; -- Convert to integer before modulus
+				WHEN 5 => digit0 <= to_integer(unsigned(HH)) / 10; 
+				WHEN 4 => digit0 <= to_integer(unsigned(HH)) MOD 10;
 				WHEN 3 => digit0 <= to_integer(unsigned(MM)) / 10;
 				WHEN 2 => digit0 <= to_integer(unsigned(MM)) MOD 10;
 				WHEN 1 => digit0 <= to_integer(unsigned(SS)) / 10;
@@ -114,22 +113,22 @@ BEGIN
 
 				WHEN 9 => -- Display 9
 					seg <= "0000100"; -- segments a, b, c, d, f, g on
- 
+
 				WHEN OTHERS => 
 					seg <= "0111000";
 			END CASE;
 		END IF;
 	END PROCESS;
 
-	Dec_point : PROCESS (clk)
+	Dec_point : PROCESS (clk, pos_reg)
 	BEGIN
-		if rising_edge(clk) THEN
+		IF rising_edge(clk) THEN
 			CASE TO_INTEGER (pos_reg) IS
 				WHEN 4 => DP <= '0';
 				WHEN 2 => DP <= '0';
 				WHEN OTHERS => DP <= '1';
 			END CASE;
-		end if;
+		END IF;
 	END PROCESS;
 
 END ARCHITECTURE behavioral;

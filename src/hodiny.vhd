@@ -7,7 +7,6 @@ ENTITY hodiny IS
 		clk100MHz : IN std_logic;
 		A : IN std_logic;
 		B : IN std_logic;
-		C : IN std_logic;
 		mode : IN std_logic_vector(1 DOWNTO 0);
 		HH : OUT std_logic_vector(7 DOWNTO 0);
 		MM : OUT std_logic_vector(7 DOWNTO 0);

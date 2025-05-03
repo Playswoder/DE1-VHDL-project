@@ -1,57 +1,55 @@
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.NUMERIC_STD.ALL;
-library UNISIM;
-use UNISIM.VComponents.all;
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.NUMERIC_STD.ALL;
+LIBRARY UNISIM;
+USE UNISIM.VComponents.ALL;
 
-entity switch is
+ENTITY switch IS
 
-    Port ( hh       : in STD_LOGIC_VECTOR (7 downto 0);
-           mm       : in STD_LOGIC_VECTOR (7 downto 0);
-           ss       : in STD_LOGIC_VECTOR (7 downto 0);
-           D        : in std_logic_vector (1 downto 0); 
-           ahh      : in STD_LOGIC_VECTOR (7 downto 0);
-           amm      : in STD_LOGIC_VECTOR (7 downto 0);
-           smm      : in STD_LOGIC_VECTOR (7 downto 0);
-           sss      : in STD_LOGIC_VECTOR (7 downto 0);
-           svv      : in STD_LOGIC_VECTOR (7 downto 0);
-           clk      : in STD_LOGIC;
-           fhh      : out STD_LOGIC_VECTOR (7 downto 0);
-           fmm      : out STD_LOGIC_VECTOR (7 downto 0);
-           fss      : out STD_LOGIC_VECTOR (7 downto 0)
-           );
-           
-end switch;
+	PORT (
+		hh : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+		mm : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+		ss : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+		D : IN std_logic_vector (1 DOWNTO 0);
+		ahh : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+		amm : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+		smm : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+		sss : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+		svv : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+		clk : IN STD_LOGIC;
+		fhh : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+		fmm : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+		fss : OUT STD_LOGIC_VECTOR (7 DOWNTO 0)
+	);
+ 
+END switch;
 
-architecture Behavioral of switch is
-    
-signal sig_mode : unsigned(1 downto 0) := "00";
-signal D_prev : std_logic := '0';
-
-
-begin
-
-    Switch_proc : process(hh, mm, ss, D, ahh, amm, smm, sss, svv, sig_mode)
-    begin
-        if rising_edge(clk) then
-            case D is
-                when "00" =>
-                    fhh <= hh;
-                    fmm <= mm;
-                    fss <= ss;
-                when "01" =>
-                    fhh <= ahh;
-                    fmm <= amm;
-                    fss <= "00000000";
-                when "10" =>
-                    fhh <= smm;
-                    fmm <= sss;
-                    fss <= svv;
-                when others =>
-                    fhh <= (others => '0');
-                    fmm <= (others => '0');
-                    fss <= (others => '0');
-            end case;
-        end if;
-    end process Switch_proc;
-end Behavioral;
+ARCHITECTURE Behavioral OF switch IS
+ 
+	SIGNAL sig_mode : unsigned(1 DOWNTO 0) := "00";
+	SIGNAL D_prev : std_logic := '0';
+BEGIN
+	Switch_proc : PROCESS (clk, hh, mm, ss, D, ahh, amm, smm, sss, svv, sig_mode)
+	BEGIN
+		IF rising_edge(clk) THEN
+			CASE D IS
+				WHEN "00" => 
+					fhh <= hh;
+					fmm <= mm;
+					fss <= ss;
+				WHEN "01" => 
+					fhh <= ahh;
+					fmm <= amm;
+					fss <= "00000000";
+				WHEN "10" => 
+					fhh <= smm;
+					fmm <= sss;
+					fss <= svv;
+				WHEN OTHERS => 
+					fhh <= (OTHERS => '0');
+					fmm <= (OTHERS => '0');
+					fss <= (OTHERS => '0');
+			END CASE;
+		END IF;
+	END PROCESS Switch_proc;
+END Behavioral;
