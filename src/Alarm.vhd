@@ -64,45 +64,25 @@ BEGIN
 				ELSE
 					alarm_hh <= std_logic_vector(unsigned(alarm_hh) + 1);
 				END IF;
-			ELSE 
- 
-				alarm_hh <= alarm_hh;
  
 			END IF;
- 
-		ELSE
- 
-			alarm_hh <= alarm_hh;
- 
+		END IF;
+
+		IF (mode = "01" AND rising_edge (CLK100MHZ)) THEN
+
+			IF (B = '1') THEN
+				IF (alarm_mm = x"3b") THEN
+					alarm_mm <= x"00";
+				ELSE
+					alarm_mm <= std_logic_vector(unsigned(alarm_mm) + 1);
+				END IF;
+
+			END IF;
+				
 		END IF;
  
- 
 	END PROCESS;
  
-	PROCESS (mode, B, CLK100MHZ)
-		BEGIN
-			IF (mode = "01" AND rising_edge (CLK100MHZ)) THEN
- 
-				IF (B = '1') THEN
-					IF (alarm_mm = x"3b") THEN
-						alarm_mm <= x"00";
-					ELSE
-						alarm_mm <= std_logic_vector(unsigned(alarm_mm) + 1);
-					END IF;
- 
-				ELSE 
- 
-					alarm_mm <= alarm_mm;
- 
-				END IF;
- 
-			ELSE 
-				alarm_mm <= alarm_mm;
- 
-			END IF;
- 
- 
-	END PROCESS;
 	-- Output the alarm set values
 	ahh <= alarm_hh;
 	amm <= alarm_mm;
