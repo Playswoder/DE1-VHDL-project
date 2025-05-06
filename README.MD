@@ -21,6 +21,9 @@ This project details the design and implementation of a versatile digital clock 
 ![Photo of your application with labels of individual parts.](images/app.png)
 
 [Link to your short video presentation.](https://drive.google.com/file/d/1JJ692UHHd7oOWDBoQ0ek7HKJ6iFH9hNW/view?usp=drivesdk)
+
+[![alt text](https://drive.google.com/file/d/1JJ692UHHd7oOWDBoQ0ek7HKJ6iFH9hNW/view?usp=drivesdk)](https://drive.google.com/file/d/1JJ692UHHd7oOWDBoQ0ek7HKJ6iFH9hNW/view?usp=drivesdk)
+
 # Theoretical description and explanation
 
 The core of our digital clock project lies in the principles of digital logic and sequential circuit design. The VHDL code implements several key modules that interact to provide the desired functionality.
