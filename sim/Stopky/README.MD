@@ -2,7 +2,7 @@
 # Stopky
 This block acts as a stopwatch with MM:SS:CS output logic vectors
 
-![Integral diagram PDF](img/Schematic.pdf)
+![Internal diagram PDF](img/Schematic.pdf)
 
 
 ![Source file](../../src/stopky.vhd)
