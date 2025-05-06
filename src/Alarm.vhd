@@ -102,13 +102,13 @@ BEGIN
 			END IF;
  
  
-		END PROCESS;
-		-- Output the alarm set values
-		ahh <= alarm_hh;
-		amm <= alarm_mm;
- 
+	END PROCESS;
+	-- Output the alarm set values
+	ahh <= alarm_hh;
+	amm <= alarm_mm;
 
- 
-		-- launch alarm if time matches
-		alarm_out <= '1' WHEN (hh = alarm_hh AND mm = alarm_mm) ELSE '0';
+
+
+	-- launch alarm if time matches
+	alarm_out <= '1' WHEN (hh = alarm_hh AND mm = alarm_mm) ELSE '0';
 END Behavioral;
