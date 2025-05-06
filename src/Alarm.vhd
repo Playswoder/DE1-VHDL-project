@@ -66,9 +66,6 @@ BEGIN
 				END IF;
  
 			END IF;
-		END IF;
-
-		IF (mode = "01" AND rising_edge (CLK100MHZ)) THEN
 
 			IF (B = '1') THEN
 				IF (alarm_mm = x"3b") THEN
