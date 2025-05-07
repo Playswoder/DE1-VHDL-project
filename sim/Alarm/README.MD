@@ -1,5 +1,5 @@
 # Alarm
-This block converts HH:MM:SS input to 6 7-segment displays.
+This block allows you to set alarm
 
 ![Internal diagram PDF](img/alarm_schematic.pdf)
 
@@ -7,5 +7,5 @@ This block converts HH:MM:SS input to 6 7-segment displays.
 [Testbench](Alarm_tb.vhd)
 
 ## Simulation results
-In this simulation the block is correctly converting input values to 7 seg display and outputs correct display position
+In this sim Alarm correctly sets time based on user input
 ![image](img/image.png)
