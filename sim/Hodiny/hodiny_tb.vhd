@@ -1,102 +1,100 @@
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
+ENTITY hodiny_tb IS
+END ENTITY hodiny_tb;
 
-entity hodiny is
-    Port (
-        clk100MHz : in  std_logic;
-        A         : in  std_logic;
-        B         : in  std_logic;
-        C         : in  std_logic;
-        mode      : in std_logic_vector(1 downto 0);
-        HH        : out std_logic_vector(7 downto 0);
-        MM        : out std_logic_vector(7 downto 0);
-        SS        : out std_logic_vector(7 downto 0)
-    );
-end entity hodiny;
+ARCHITECTURE Behavioral OF hodiny_tb IS
 
-architecture Behavioral of hodiny is
-    signal s_sekundy : integer range 0 to 59 := 0;
-    signal s_minuty  : integer range 0 to 59 := 0;
-    signal s_hodiny  : integer range 0 to 23 := 0;
+	COMPONENT hodiny
 
-    constant SECOND_TC : natural := 100_000_000;
-    signal count : natural range 0 to SECOND_TC - 1;
-    signal second_tick : std_logic := '0';
+		PORT (
+			clk100MHz : IN std_logic;
+			A : IN std_logic;
+			B : IN std_logic;
+			C : IN std_logic;
+			mode : IN std_logic_vector(1 DOWNTO 0) := "00";
+			HH : OUT std_logic_vector(7 DOWNTO 0);
+			MM : OUT std_logic_vector(7 DOWNTO 0);
+			SS : OUT std_logic_vector(7 DOWNTO 0)
+		);
+	END COMPONENT;
+ 
+	SIGNAL clk100MHz_tb : std_logic := '0';
+	SIGNAL A_tb : std_logic := '0';
+	SIGNAL B_tb : std_logic := '0';
+	SIGNAL C_tb : std_logic := '0';
+	SIGNAL HH_tb : std_logic_vector(7 DOWNTO 0);
+	SIGNAL MM_tb : std_logic_vector(7 DOWNTO 0);
+	SIGNAL SS_tb : std_logic_vector(7 DOWNTO 0);
 
+ 
+	CONSTANT clk_period : TIME := 10 ns;
+BEGIN
+	uut : hodiny
+	PORT MAP(
+		clk100MHz => clk100MHz_tb, 
+		A => A_tb, 
+		B => B_tb, 
+		C => C_tb, 
+ 
+		HH => HH_tb, 
+		MM => MM_tb, 
+		SS => SS_tb
+	);
+ 
 
-  
-begin
+ 
+	clk_process : PROCESS
+	BEGIN
+		LOOP
+		clk100MHz_tb <= '0';
+		WAIT FOR clk_period / 2;
+		clk100MHz_tb <= '1';
+		WAIT FOR clk_period / 2;
+	END LOOP;
+	END PROCESS;
 
-       
-   
-    tick_gen_proc : process(clk100MHz)
-    begin
-        if rising_edge(clk100MHz) then
-            if count = SECOND_TC - 1 then
-                count <= 0;
-                second_tick <= '1';
-            else
-                count <= count + 1;
-                second_tick <= '0';
-            end if;
-        end if;
-    end process;
+ 
+	stimulus_process : PROCESS
+	BEGIN
+		A_tb <= '0';
+		B_tb <= '0';
+		C_tb <= '0';
+		WAIT FOR 20 ns;
 
-    
-    Clock : process(clk100MHz)
-    begin
-        if rising_edge(clk100MHz) then
-    
-                
-                    if second_tick = '1' then
-                        if s_sekundy = 59 then
-                            s_sekundy <= 0;
-                            if s_minuty = 59 then
-                                s_minuty <= 0;
-                                if s_hodiny = 23 then
-                                    s_hodiny <= 0;
-                                else
-                                    s_hodiny <= s_hodiny + 1;
-                                end if;
-                            else
-                                s_minuty <= s_minuty + 1;
-                            end if;
-                        else
-                            s_sekundy <= s_sekundy + 1;
-                        end if;
-                    end if;
+		WAIT FOR 5000 ms;
 
-                    
-            case mode is
-                
-                when "00" =>
-                   
-                    if A = '1' then
-                        if s_hodiny = 23 then
-                            s_hodiny <= 0;
-                        else
-                            s_hodiny <= s_hodiny + 1;
-                        end if;
-                    end if;
+		C_tb <= '1';
+		WAIT FOR clk_period;
+		C_tb <= '0';
+		WAIT FOR 20 ns;
 
-                    if B = '1' then
-                        if s_minuty = 59 then
-                            s_minuty <= 0;
-                        else
-                            s_minuty <= s_minuty + 1;
-                        end if;
-                    end if;
+		FOR i IN 1 TO 5 LOOP
+			A_tb <= '1';
+			WAIT FOR clk_period;
+			A_tb <= '0';
+			WAIT FOR 2 * clk_period;
+		END LOOP;
+		WAIT FOR 1000 ms;
+ 
+		A_tb <= '1';
+		WAIT FOR 5 * clk_period;
+		A_tb <= '0';
 
-                   
+		B_tb <= '1';
+		WAIT FOR clk_period;
+		B_tb <= '0';
+		WAIT FOR 2 * clk_period;
+		WAIT FOR 1000 ms;
 
-                  when others => null;
+		C_tb <= '1';
+		WAIT FOR clk_period;
+		C_tb <= '0';
+		WAIT FOR 5000 ms;
+ 
+		WAIT;
 
-                end case;
-            end if;
-        end process;
-    SS <= std_logic_vector(TO_UNSIGNED(s_sekundy, 8));
-    MM <= std_logic_vector(TO_UNSIGNED(s_minuty,8));
-    HH <= std_logic_vector(TO_UNSIGNED(s_hodiny,8));
-       
-    end Behavioral;
+ 
+	END PROCESS;
+END ARCHITECTURE Behavioral;
