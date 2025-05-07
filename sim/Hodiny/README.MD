@@ -1,7 +1,7 @@
 # Hodiny
 This block converts HH:MM:SS input to 6 7-segment displays.
 
-![Internal diagram PDF](img/hodny_RTL.pdf)
+![Internal diagram PDF](img/hodiny_RTL.pdf)
 
 [Source file](../../src/hodiny.vhd)
 [Testbench](hodiny_tb.vhd)
