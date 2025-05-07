@@ -51,14 +51,17 @@ Insert descriptive text and schematic(s) of your implementation.
 
 Put flowchats/state diagrams of your algorithm(s) and direct links to source/testbench files in src and sim folders. Put a descriptive top-level schematic of your application.
 
-![Stopwatch](sim/Stopky/README.MD)
+[Stopwatch](sim/Stopky/README.MD)
 
-![Switch](sim/Switch/README.MD)
+[Switch](sim/Switch/README.MD)
 
-![B27S](sim/BinTo7Seg/README.MD)
+[B27S](sim/BinTo7Seg/README.MD)
 
-![Top_level](sim/Top_level/README.MD)
+[Top_level](sim/Top_level/README.MD)
 
+[Clock](sim/Hodiny/README.MD)
+
+[Alarm](sim/Alarm/README.MD)
 
 Component(s) simulations
 
