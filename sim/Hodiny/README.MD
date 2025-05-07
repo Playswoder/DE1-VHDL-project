@@ -1,5 +1,5 @@
 # Hodiny
-This block converts HH:MM:SS input to 6 7-segment displays.
+Na náběžnou hranu hodinového signálu reaguje signál count, který počítá do hodnoty 99 999 999, jakmile nabide této hodnoty tak se počítadlo sekund zvedne o +1, až přeteče počítadlo sekund tak se zvednou minuty o +1 a přetečení minut se zvednou hodiny o +1. Po přetečení hodin se čas vyresetuje na 0.
 
 ![Internal diagram PDF](img/hodiny_RTL.pdf)
 
@@ -7,5 +7,5 @@ This block converts HH:MM:SS input to 6 7-segment displays.
 [Testbench](hodiny_tb.vhd)
 
 ## Simulation results
-In this simulation the block is correctly converting input values to 7 seg display and outputs correct display position
+
 ![image](img/Hodiny_tb.png)
